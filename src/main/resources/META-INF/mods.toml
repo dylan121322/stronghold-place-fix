@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="strongholdplacefix"
+version="1.1.0"
+displayName="Stronghold Place Fix"
+authors="cellabsorb"
+description='''
+Makes /place structure minecraft:stronghold <x> <y> <z> actually generate the stronghold around the requested position.
+
+Vanilla 1.20.1 already honours the requested chunk, but randomly relocates the stronghold vertically (usually deep underground). This server-side mod forces the top of the placed stronghold to the requested Y. Natural stronghold generation is not affected.
+'''
+displayTest="IGNORE_ALL_VERSION"
+
+[[dependencies.strongholdplacefix]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.strongholdplacefix]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"

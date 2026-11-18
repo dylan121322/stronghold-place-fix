@@ -1,0 +1,55 @@
+Stronghold Place Fix 1.1.0 — evidence
+Minecraft 1.20.1 / Forge 47.1.39, dedicated test instance (copy of live server), normal world seed 778.
+Method: /place structure ... then save-all flush; region .mca before/after block diff (non-air blocks changed)
+inside the StructureStart bounding box.  Requested chunk = chunk containing requested x/z.
+
+[1] minecraft:stronghold  -193 60 -97
+    probe: "That position is not loaded" (generation done, no placement)
+    bbox y 28..60, chunks -17..-8 / -10..-4
+    place: Generated structure "minecraft:stronghold" at -193, 60, -97
+    requested chunk (-13,-7): 903 blocks, y 48..60
+    whole structure: 24101 blocks, 42 chunks
+
+[2] minecraft:mineshaft  3384 60 3384  (plains, away from spawn)
+    probe: "That position is not loaded"
+    bbox y 36..60, chunks 208..214 / 206..217
+    requested chunk (211,211): 67 blocks, y 50..60
+    whole structure: 1276 blocks, 24 chunks
+
+[3] minecraft:village_plains  -193 60 703
+    probe: "That position is not loaded"
+    bbox y 60..82, chunks -16..-9 / 38..46
+    requested chunk (-13,43): 126 blocks, y 67..73
+    whole structure: 3743 blocks, 34 chunks
+
+[4] minecraft:ancient_city  -193 60 1103
+    probe: "That position is not loaded"
+    bbox y 30..60, chunks -21..-7 / 61..74
+    requested chunk (-13,68): 1923 blocks, y 30..60
+    whole structure: 46787 blocks, 133 chunks
+
+[5] minecraft:desert_pyramid  -1128 60 7192
+    probe: Generated structure (placed before snapshot; block count not collected on 1.1.0)
+    bbox y 60..74, chunks -71..-70 / 449..450
+    1.0.0 reference measurement: 1430 blocks y 60..74; requested chunk 653 blocks y 62..74
+
+[6] minecraft:monument  (ocean monument)  1912 60 2904
+    probe: Generated structure (placed before snapshot; block count not collected on 1.1.0)
+    bbox y 39..61, chunks 117..120 / 179..182
+    requested Y already inside natural bbox -> minimal-displacement policy leaves it unchanged
+    1.0.0 reference measurement: 45499 blocks y 39..61; requested chunk 3136 blocks y 39..60
+
+[7] twilightforest:aurora_palace  3000 60 2000
+    natural y 103..235 -> bottom-anchored at 60, final bbox y 60..192
+    requested chunk (187,125): 4433 blocks, y 60..192
+    whole structure: 45726 blocks, 10 chunks
+
+[8] goety:crypt  2000 60 2000
+    natural y 12..84 already contains 60 -> unchanged (minimal-displacement)
+    requested chunk (125,125): 2084 blocks, y 41..84
+    whole structure: 38115 blocks, 48 chunks
+
+Natural generation note (1.0.0 regression, same world):
+    /locate structure minecraft:stronghold -> [-1600, ~, 1568]
+    natural stronghold: 7863 blocks, 23 chunks, y -29..-1, no forcing log line.
+    The 1.1.0 mechanism is still only active while /place structure runs (ThreadLocal target).
